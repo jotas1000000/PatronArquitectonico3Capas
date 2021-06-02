@@ -1,0 +1,53 @@
+﻿@page "/productlist"
+@using Model
+@using Interfaces
+@inject IProductoService ProductoService
+
+
+<h3>Lista de los productos en inventario</h3>
+
+@if(productos == null) {
+    <p><em>Loading...</em></p>
+}else {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Cantidad
+                </th>
+                <th>
+                    Precio
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var producto in productos)
+            {
+            <tr>
+                <td>@producto.nombre</td>
+                <td>@producto.cantidad</td>
+                <td>@producto.precio</td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Producto> productos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            productos = await ProductoService.GetAllProducts();
+        } catch (Exception)
+        {
+            throw;
+        }
+    }
+}

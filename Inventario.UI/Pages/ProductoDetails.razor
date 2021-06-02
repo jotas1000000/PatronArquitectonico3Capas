@@ -1,0 +1,47 @@
+﻿@page "/productdetails"
+@using Model
+@using Interfaces
+@inject IProductoService ProductoService
+
+<h3>ProductoDetails</h3>
+
+<EditForm Model="@producto">
+    <table class="table">
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind="producto.nombre" /></td>
+        </tr>
+        <tr>
+            <td>Cantidad:</td>
+            <td><input type="text" @bind="producto.cantidad" /></td>
+        </tr>
+        <tr>
+            <td>Precio:</td>
+            <td><input type="text" @bind="producto.precio" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Guardar" @onclick="SaveProduct"/>
+                <input type="button" value="Cancelar" @onclick="CancelProduct" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+@code {
+    Producto producto = new Producto();
+    protected void CancelProduct()
+    {
+
+    }
+
+    protected async Task SaveProduct()
+    {
+        await ProductoService.SaveProducto(producto);
+    }
+
+
+
+
+
+}
